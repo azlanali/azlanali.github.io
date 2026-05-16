@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azlan Ali — Engineer, Farmer, Builder</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --card: #1a2235;
+    --border: #1e2d45;
+    --accent: #3b82f6;
+    --accent2: #10b981;
+    --accent3: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --dim: #4b5563;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,14,23,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo { font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; color: var(--text); }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.04em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 2rem 4rem;
+    max-width: 900px; margin: 0 auto;
+    position: relative;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);
+    color: var(--accent); font-size: 0.75rem; letter-spacing: 0.1em;
+    padding: 0.3rem 0.8rem; border-radius: 999px; margin-bottom: 1.5rem;
+    text-transform: uppercase; width: fit-content;
+  }
+  .hero-tag::before { content: '●'; font-size: 0.5rem; }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 1rem;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .sub {
+    font-size: 1.1rem; color: var(--muted); max-width: 560px;
+    margin-bottom: 2rem; line-height: 1.7;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.65rem 1.4rem; border-radius: 8px; font-size: 0.9rem;
+    font-weight: 600; text-decoration: none; cursor: pointer;
+    transition: all 0.2s; border: none; display: inline-block;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { color: var(--text); border-color: var(--dim); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-val { font-size: 1.8rem; font-weight: 800; color: var(--text); }
+  .stat-lbl { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 0.1rem; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem; font-weight: 600;
+  }
+  h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .section-sub { color: var(--muted); margin-bottom: 2.5rem; max-width: 500px; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+  .card-farm::before { background: var(--accent2); }
+  .card-og::before { background: var(--accent); }
+  .card-biz::before { background: var(--accent3); }
+  .project-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .project-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .project-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .project-tag {
+    display: inline-block; margin-top: 0.9rem;
+    font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 600;
+  }
+  .tag-active { background: rgba(16,185,129,0.1); color: var(--accent2); }
+  .tag-dev { background: rgba(59,130,246,0.1); color: var(--accent); }
+  .tag-planned { background: rgba(245,158,11,0.1); color: var(--accent3); }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 0 1.5rem; padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date { font-size: 0.78rem; color: var(--dim); padding-top: 0.2rem; }
+  .exp-role { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.15rem; }
+  .exp-company { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.3rem; }
+  .exp-desc { font-size: 0.83rem; color: var(--muted); }
+
+  /* PUBLICATIONS */
+  .pub-list { display: flex; flex-direction: column; gap: 1rem; }
+  .pub-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.2rem 1.4rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .pub-id {
+    font-size: 0.72rem; color: var(--accent); font-weight: 700;
+    background: rgba(59,130,246,0.1); padding: 0.25rem 0.6rem;
+    border-radius: 4px; white-space: nowrap; margin-top: 0.1rem;
+  }
+  .pub-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.5; }
+  .pub-meta { font-size: 0.78rem; color: var(--muted); }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .skill-group {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.2rem;
+  }
+  .skill-group h4 { font-size: 0.78rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-tag {
+    font-size: 0.75rem; color: var(--muted);
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    padding: 0.2rem 0.55rem; border-radius: 4px;
+  }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .contact-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.2rem 1.4rem;
+    display: flex; align-items: center; gap: 0.9rem;
+    text-decoration: none; color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: var(--accent); }
+  .contact-icon { font-size: 1.2rem; }
+  .contact-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .contact-val { font-size: 0.88rem; font-weight: 600; margin-top: 0.1rem; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem;
+    font-size: 0.78rem; color: var(--dim);
+    border-top: 1px solid var(--border);
+  }
+
+  /* DIVIDER */
+  .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">azlan<span>ali</span></div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#publications">Publications</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Abu Dhabi, UAE · Open to consulting</div>
+  <h1>Engineer.<br><em>Farmer.</em><br>Builder.</h1>
+  <p class="sub">
+    20+ years in oil & gas well integrity — now building at the intersection of petroleum engineering, data science, and farm technology.
+  </p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn btn-primary">View Projects</a>
+    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-val">20+</div>
+      <div class="stat-lbl">Years in O&G</div>
+    </div>
+    <div>
+      <div class="stat-val">200</div>
+      <div class="stat-lbl">Durian Trees (Live IoT)</div>
+    </div>
+    <div>
+      <div class="stat-val">2</div>
+      <div class="stat-lbl">SPE Publications</div>
+    </div>
+    <div>
+      <div class="stat-val">UT Austin</div>
+      <div class="stat-lbl">B.Sc. Petroleum Eng.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">What I'm building</div>
+  <h2>Current Projects</h2>
+  <p class="section-sub">A mix of live deployments, products in development, and longer-term ambitions.</p>
+  <div class="projects-grid">
+
+    <div class="project-card card-farm">
+      <div class="project-icon">🌳</div>
+      <h3>Farm IoT — Bentong</h3>
+      <p>Live sensor network across ~200 durian trees in Pahang, Malaysia. Monitoring temperature, humidity, soil, and running controlled fertiliser trials.</p>
+      <span class="project-tag tag-active">Live</span>
+    </div>
+
+    <div class="project-card card-biz">
+      <div class="project-icon">🌾</div>
+      <h3>Agriculture App</h3>
+      <p>A farm management platform for Malaysian farmers — crop monitoring, input tracking, and reporting. Designed for others, not just my own farm.</p>
+      <span class="project-tag tag-dev">In Development</span>
+    </div>
+
+    <div class="project-card card-og">
+      <div class="project-icon">🛢️</div>
+      <h3>CERDIK — O&G AI Platform</h3>
+      <p>AI-powered data product for oil and gas. Built on domain expertise accumulated over two decades in well integrity and reservoir engineering.</p>
+      <span class="project-tag tag-dev">In Development</span>
+    </div>
+
+    <div class="project-card card-biz">
+      <div class="project-icon">🚜</div>
+      <h3>Farm-to-Buyer Platform</h3>
+      <p>Direct produce delivery connecting Malaysian farms to buyers. Cutting out middlemen and improving margins for small-scale farmers.</p>
+      <span class="project-tag tag-dev">Early Stage</span>
+    </div>
+
+    <div class="project-card card-og">
+      <div class="project-icon">⚙️</div>
+      <h3>Well Integrity Consultancy</h3>
+      <p>Planned post-ADNOC. 20+ years of methodology, risk assessment frameworks, and hands-on field experience — available to the wider industry.</p>
+      <span class="project-tag tag-planned">Planned</span>
+    </div>
+
+    <div class="project-card card-biz">
+      <div class="project-icon">🥐</div>
+      <h3>The Bakery</h3>
+      <p>The dream project. No timeline yet — but it's on the list.</p>
+      <span class="project-tag tag-planned">Someday</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <h2>Experience</h2>
+  <p class="section-sub">Oil & gas across Malaysia, Sarawak, and Abu Dhabi.</p>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-date">2018 – Present</div>
+      <div>
+        <div class="exp-role">Specialist, Well Integrity (Assessment)</div>
+        <div class="exp-company">ADNOC Onshore · Abu Dhabi, UAE</div>
+        <div class="exp-desc">Advanced computational risk assessment. Annulus pressure management. ALARP compliance across ADNOC's well portfolio.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2014 – 2018</div>
+      <div>
+        <div class="exp-role">Senior Well Integrity Engineer</div>
+        <div class="exp-company">ADCO · Abu Dhabi, UAE</div>
+        <div class="exp-desc">MAE threat identification. Complex well integrity analysis at the Technical Centre for Integrity & Operation Excellence.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2012 – 2014</div>
+      <div>
+        <div class="exp-role">Well Integrity Engineer</div>
+        <div class="exp-company">PETRONAS Carigali · Kuala Lumpur, Malaysia</div>
+        <div class="exp-desc">Well services operations, risk assessment methodology, well integrity audit processes.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2009 – 2012</div>
+      <div>
+        <div class="exp-role">Well Services & Well Integrity Engineer</div>
+        <div class="exp-company">PETRONAS Carigali · Miri, Sarawak</div>
+        <div class="exp-desc">Well intervention, production enhancement, and wellhead maintenance offshore Sarawak.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2003 – 2009</div>
+      <div>
+        <div class="exp-role">Senior Petroleum Economist</div>
+        <div class="exp-company">PETRONAS Strategic Planning · Kuala Lumpur, Malaysia</div>
+        <div class="exp-desc">Pre-development studies, economic evaluations, Field Development Plans, and PSC analysis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-label">Research</div>
+  <h2>Publications</h2>
+  <p class="section-sub">Peer-reviewed work presented at SPE conferences.</p>
+  <div class="pub-list">
+    <div class="pub-item">
+      <div class="pub-id">SPE-188792</div>
+      <div>
+        <div class="pub-title">Well Integrity Data Assessment (WIDA) — Integrating Established Well Data Systems to Increase Safe Operability</div>
+        <div class="pub-meta">Author · SPE Conference · November 2017</div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-id">SPE-203075</div>
+      <div>
+        <div class="pub-title">Well Integrity Management in Brown Fields</div>
+        <div class="pub-meta">Co-Author · SPE Conference · November 2020</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Toolkit</div>
+  <h2>Skills</h2>
+  <p class="section-sub">Technical depth across engineering, data science, and geospatial tools.</p>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <h4>Programming</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">R</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Excel-VBA</span>
+        <span class="skill-tag">RMarkdown</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Data & AI</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">Dataiku</span>
+        <span class="skill-tag">Cognite CDF</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">ANN</span>
+        <span class="skill-tag">Timeseries</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Well Engineering</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">WellCat</span>
+        <span class="skill-tag">IWIT</span>
+        <span class="skill-tag">WellView</span>
+        <span class="skill-tag">StressCheck</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Geospatial</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">ArcGIS Pro</span>
+        <span class="skill-tag">QGIS</span>
+        <span class="skill-tag">ArcMap</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Petroleum Economics</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">Merak PEEP</span>
+        <span class="skill-tag">Woodmac</span>
+        <span class="skill-tag">IHS QUE$TOR</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Dev Tools</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">RStudio</span>
+        <span class="skill-tag">Jupyter</span>
+        <span class="skill-tag">Obsidian</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get in touch</div>
+  <h2>Contact</h2>
+  <p class="section-sub">Based in Abu Dhabi. Farm in Bentong, Pahang. Available for consulting conversations.</p>
+  <div class="contact-grid">
+    <a href="mailto:azlan.a.ali3@gmail.com" class="contact-item">
+      <span class="contact-icon">✉️</span>
+      <div>
+        <div class="contact-label">Personal Email</div>
+        <div class="contact-val">azlan.a.ali3@gmail.com</div>
+      </div>
+    </a>
+    <a href="https://linkedin.com/in/azlanali" class="contact-item" target="_blank">
+      <span class="contact-icon">💼</span>
+      <div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-val">linkedin.com/in/azlanali</div>
+      </div>
+    </a>
+    <a href="https://orcid.org/0009-0002-8427-5871" class="contact-item" target="_blank">
+      <span class="contact-icon">🔬</span>
+      <div>
+        <div class="contact-label">ORCID</div>
+        <div class="contact-val">0009-0002-8427-5871</div>
+      </div>
+    </a>
+    <a href="https://azlanali.shinyapps.io/shiny/" class="contact-item" target="_blank">
+      <span class="contact-icon">📊</span>
+      <div>
+        <div class="contact-label">Portfolio (Shiny)</div>
+        <div class="contact-val">azlanali.shinyapps.io</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  Built with intention · Abu Dhabi, UAE · 2026
+</footer>
+
+</body>
+</html>
