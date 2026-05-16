@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azlan Bin Ali — Design Standard v1</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Inter', 'Geist Sans', sans-serif; background: #0f0c00; color: #E8D49A; line-height: 1.7; }
+
+  .cover { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0f0c00; border-bottom: 1px solid #C9A84C33; padding: 4rem 2rem; text-align: center; }
+  .cover-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9A84C; margin-bottom: 2.5rem; }
+  .cover-name { font-size: clamp(32px, 6vw, 64px); font-weight: 500; letter-spacing: -1px; color: #F5D97A; line-height: 1.1; margin-top: 1.5rem; }
+  .cover-sub { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C; margin-top: 0.75rem; }
+  .cover-version { font-size: 11px; color: #6b5a20; margin-top: 3rem; }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 5rem 2.5rem; }
+  .section { margin-bottom: 5rem; }
+  .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C; margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid #C9A84C22; }
+  .section-title { font-size: 28px; font-weight: 500; color: #F5D97A; margin-bottom: 0.5rem; letter-spacing: -0.3px; }
+  .section-body { font-size: 15px; color: #C9A84C; line-height: 1.8; margin-bottom: 1.5rem; }
+
+  .logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 2rem 0; }
+  .logo-tile { border-radius: 16px; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+  .tile-primary { background: #0f0c00; border: 1px solid #C9A84C44; }
+  .tile-secondary { background: #1A1630; border: 1px solid #7F77DD33; }
+  .tile-light { background: #EEEDFE; }
+  .tile-white { background: #fff; }
+  .wm-gold { font-size: 17px; font-weight: 500; letter-spacing: -0.2px; color: #F5D97A; }
+  .wm-light { font-size: 17px; font-weight: 500; letter-spacing: -0.2px; color: #EAE6FF; }
+  .wm-dark { font-size: 17px; font-weight: 500; letter-spacing: -0.2px; color: #1A1630; }
+  .sub-gold { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C; margin-top: 2px; }
+  .sub-light { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #AFA9EC; margin-top: 2px; }
+  .sub-dark { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #7F77DD; margin-top: 2px; }
+
+  .palette-section { margin: 2rem 0; }
+  .palette-label { font-size: 11px; color: #C9A84C88; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+  .swatch-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2rem; }
+  .swatch { display: flex; flex-direction: column; gap: 8px; }
+  .swatch-block { width: 80px; height: 80px; border-radius: 10px; }
+  .swatch-name { font-size: 11px; color: #C9A84C; text-align: center; }
+  .swatch-hex { font-size: 10px; color: #6b5a20; font-family: monospace; text-align: center; }
+
+  .type-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #C9A84C15; }
+  .type-block:last-child { border-bottom: none; }
+  .type-spec { font-size: 11px; color: #6b5a20; font-family: monospace; margin-top: 6px; }
+
+  .spacing-row { display: flex; gap: 12px; align-items: flex-end; margin: 2rem 0; }
+  .sp-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sp-block { background: #C9A84C; border-radius: 3px; opacity: 0.7; }
+  .sp-val { font-size: 10px; color: #6b5a20; font-family: monospace; }
+
+  .rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2rem 0; }
+  .rule-card { background: #1a1500; border: 1px solid #C9A84C22; border-radius: 12px; padding: 1.25rem; }
+  .rule-title { font-size: 13px; font-weight: 500; color: #F5D97A; margin-bottom: 6px; }
+  .rule-body { font-size: 12px; color: #C9A84C99; line-height: 1.65; }
+
+  .comp-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 1.5rem 0; align-items: center; }
+  .btn-primary { background: #C9A84C; color: #0f0c00; border: none; border-radius: 8px; padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .btn-secondary { background: transparent; color: #F5D97A; border: 1.5px solid #C9A84C; border-radius: 8px; padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .btn-ghost { background: transparent; color: #C9A84C99; border: 1px solid #C9A84C33; border-radius: 8px; padding: 9px 20px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  .tag { display: inline-flex; align-items: center; gap: 5px; background: #1a1500; color: #F5D97A; border: 1px solid #C9A84C44; font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+  .tag-purple { display: inline-flex; align-items: center; gap: 5px; background: #EEEDFE; color: #3C3489; font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+  .tag-green { display: inline-flex; align-items: center; gap: 5px; background: #EAF3DE; color: #3B6D11; font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+
+  .essence { background: #1a1500; border: 1px solid #C9A84C44; border-radius: 16px; padding: 2.5rem; margin: 2rem 0; text-align: center; }
+  .essence-quote { font-size: 22px; color: #F5D97A; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; }
+  .essence-attr { font-size: 11px; color: #C9A84C66; margin-top: 1rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .footer { text-align: center; padding: 4rem 2rem; border-top: 1px solid #C9A84C22; color: #6b5a20; font-size: 12px; }
+  .footer span { color: #C9A84C66; }
+
+  .divider { border: none; border-top: 1px solid #C9A84C15; margin: 0; }
+
+  .usage-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 1.5rem 0; }
+  .usage-card { background: #1a1500; border: 1px solid #C9A84C22; border-radius: 10px; padding: 1rem; }
+  .usage-ctx { font-size: 11px; font-weight: 500; color: #F5D97A; margin-bottom: 4px; }
+  .usage-val { font-size: 11px; color: #C9A84C88; }
+
+  @media (max-width: 600px) {
+    .logo-grid, .rule-grid, .usage-grid { grid-template-columns: 1fr; }
+    .page { padding: 3rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <p class="cover-label">Personal Brand · Design Standard</p>
+  <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs><clipPath id="cf"><polygon points="44,8 76,26 44,44 12,26"/></clipPath></defs>
+    <polygon points="44,8 76,26 44,44 12,26" fill="#C9A84C" fill-opacity="0.14" stroke="#F5D97A" stroke-width="1.3"/>
+    <polygon points="12,26 44,44 44,80 12,62" fill="#C9A84C" fill-opacity="0.08" stroke="#C9A84C" stroke-width="1.3"/>
+    <polygon points="76,26 44,44 44,80 76,62" fill="#C9A84C" fill-opacity="0.04" stroke="#C9A84C" stroke-width="1.3"/>
+    <g clip-path="url(#cf)">
+      <g transform="translate(44,26)">
+        <line x1="0" y1="-18" x2="0" y2="18" stroke="#F5D97A" stroke-width="0.5" opacity="0.35"/>
+        <line x1="-18" y1="0" x2="18" y2="0" stroke="#F5D97A" stroke-width="0.5" opacity="0.35"/>
+        <line x1="-13" y1="-13" x2="13" y2="13" stroke="#F5D97A" stroke-width="0.4" opacity="0.28"/>
+        <line x1="13" y1="-13" x2="-13" y2="13" stroke="#F5D97A" stroke-width="0.4" opacity="0.28"/>
+        <line x1="-7" y1="-17" x2="7" y2="17" stroke="#F5D97A" stroke-width="0.35" opacity="0.2"/>
+        <line x1="7" y1="-17" x2="-7" y2="17" stroke="#F5D97A" stroke-width="0.35" opacity="0.2"/>
+        <line x1="-17" y1="-7" x2="17" y2="7" stroke="#F5D97A" stroke-width="0.35" opacity="0.2"/>
+        <line x1="17" y1="-7" x2="-17" y2="7" stroke="#F5D97A" stroke-width="0.35" opacity="0.2"/>
+        <polygon points="0,-14 2.5,-5 0,-2 -2.5,-5" fill="#F5D97A" opacity="0.7"/>
+        <polygon points="0,14 2.5,5 0,2 -2.5,5" fill="#F5D97A" opacity="0.7"/>
+        <polygon points="-14,0 -5,2.5 -2,0 -5,-2.5" fill="#F5D97A" opacity="0.7"/>
+        <polygon points="14,0 5,2.5 2,0 5,-2.5" fill="#F5D97A" opacity="0.7"/>
+        <polygon points="-10,-10 -4,-5 -2,-2 -5,-4" fill="#F5D97A" opacity="0.45"/>
+        <polygon points="10,-10 4,-5 2,-2 5,-4" fill="#F5D97A" opacity="0.45"/>
+        <polygon points="10,10 4,5 2,2 5,4" fill="#F5D97A" opacity="0.45"/>
+        <polygon points="-10,10 -4,5 -2,2 -5,4" fill="#F5D97A" opacity="0.45"/>
+        <polygon points="-7,-13 -3,-7 -1,-4 -4,-8" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="7,-13 3,-7 1,-4 4,-8" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="13,-7 7,-3 4,-1 8,-4" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="13,7 7,3 4,1 8,4" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="7,13 3,7 1,4 4,8" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="-7,13 -3,7 -1,4 -4,8" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="-13,7 -7,3 -4,1 -8,4" fill="#C9A84C" opacity="0.3"/>
+        <polygon points="-13,-7 -7,-3 -4,-1 -8,-4" fill="#C9A84C" opacity="0.3"/>
+        <circle cx="0" cy="0" r="2" fill="#F5D97A" opacity="0.85"/>
+        <circle cx="0" cy="0" r="4.5" stroke="#F5D97A" stroke-width="0.6" fill="none" opacity="0.4"/>
+        <circle cx="0" cy="0" r="8" stroke="#F5D97A" stroke-width="0.5" fill="none" opacity="0.3"/>
+        <circle cx="0" cy="0" r="12" stroke="#C9A84C" stroke-width="0.4" fill="none" opacity="0.22"/>
+        <circle cx="0" cy="0" r="16" stroke="#C9A84C" stroke-width="0.35" fill="none" opacity="0.15"/>
+      </g>
+    </g>
+    <path d="M20 30 L44 18 L68 30" stroke="#F5D97A" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
+    <path d="M20 58 L44 70 L68 58" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.4"/>
+    <path d="M20 30 L20 58" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.32"/>
+    <path d="M68 30 L68 58" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.24"/>
+    <path d="M32 45 L35 43 L40 44 L45 43 L48 45 L44 48 L40 49 L36 48 Z" fill="#F5D97A" opacity="0.14"/>
+    <circle cx="12" cy="26" r="1.6" fill="#F5D97A" opacity="0.7"/>
+    <circle cx="76" cy="26" r="1.6" fill="#F5D97A" opacity="0.7"/>
+    <circle cx="12" cy="62" r="1.3" fill="#C9A84C" opacity="0.45"/>
+    <circle cx="76" cy="62" r="1.3" fill="#C9A84C" opacity="0.45"/>
+    <circle cx="44" cy="80" r="1.3" fill="#C9A84C" opacity="0.38"/>
+    <path d="M41 12 L44 9 L47 12 L44 15 Z" fill="#F5D97A" opacity="0.7"/>
+    <circle cx="44" cy="8" r="1.5" fill="#F5D97A" opacity="0.9"/>
+    <path d="M40.5 9.5 C42 8 43 7.2 44 7 C45 7.2 46 8 47.5 9.5" stroke="#F5D97A" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.55"/>
+  </svg>
+  <h1 class="cover-name">Azlan Bin Ali</h1>
+  <p class="cover-sub">Engineer · AI · Agrotech</p>
+  <p class="cover-version">Design Standard · Version 1 · May 2026</p>
+</div>
+
+<div class="page">
+
+  <!-- BRAND ESSENCE -->
+  <div class="section">
+    <p class="section-label">01 — Brand essence</p>
+    <div class="essence">
+      <p class="essence-quote">"The elegance of simplicity.<br>The depth of a system thinker."</p>
+      <p class="essence-attr">Azlan Bin Ali · Personal brand philosophy</p>
+    </div>
+    <p class="section-body">Three domains, one identity. Petroleum engineering, AI and machine learning, and agrotech — each complex, each demanding precision. The brand reflects a person who takes complicated systems and makes them legible. Confident, grounded, and always reaching.</p>
+    <div class="usage-grid">
+      <div class="usage-card"><p class="usage-ctx">Tone</p><p class="usage-val">Direct, clear, warm. Never over-explained.</p></div>
+      <div class="usage-card"><p class="usage-ctx">Character</p><p class="usage-val">Engineer who builds. Grounded in heritage.</p></div>
+      <div class="usage-card"><p class="usage-ctx">Promise</p><p class="usage-val">Complex made simple. Always.</p></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LOGO -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">02 — Logo mark</p>
+    <h2 class="section-title">The mark</h2>
+    <p class="section-body">The Kaabah cube in isometric perspective, with the Masjid Nabawi umbrella canopy mandala projected onto the top face. Sacred geometry on sacred architecture — precision, heritage, and radial symmetry. The mark works in two colourways: black and gold (primary) and obsidian purple (secondary).</p>
+
+    <div class="logo-grid">
+      <div class="logo-tile tile-primary">
+        <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+          <defs><clipPath id="lp1"><polygon points="44,8 76,26 44,44 12,26"/></clipPath></defs>
+          <polygon points="44,8 76,26 44,44 12,26" fill="#C9A84C" fill-opacity="0.14" stroke="#F5D97A" stroke-width="1.3"/>
+          <polygon points="12,26 44,44 44,80 12,62" fill="#C9A84C" fill-opacity="0.08" stroke="#C9A84C" stroke-width="1.3"/>
+          <polygon points="76,26 44,44 44,80 76,62" fill="#C9A84C" fill-opacity="0.04" stroke="#C9A84C" stroke-width="1.3"/>
+          <g clip-path="url(#lp1)"><g transform="translate(44,26)">
+            <line x1="0" y1="-18" x2="0" y2="18" stroke="#F5D97A" stroke-width="0.5" opacity="0.35"/>
+            <line x1="-18" y1="0" x2="18" y2="0" stroke="#F5D97A" stroke-width="0.5" opacity="0.35"/>
+            <line x1="-13" y1="-13" x2="13" y2="13" stroke="#F5D97A" stroke-width="0.4" opacity="0.28"/>
+            <line x1="13" y1="-13" x2="-13" y2="13" stroke="#F5D97A" stroke-width="0.4" opacity="0.28"/>
+            <polygon points="0,-14 2.5,-5 0,-2 -2.5,-5" fill="#F5D97A" opacity="0.7"/>
+            <polygon points="0,14 2.5,5 0,2 -2.5,5" fill="#F5D97A" opacity="0.7"/>
+            <polygon points="-14,0 -5,2.5 -2,0 -5,-2.5" fill="#F5D97A" opacity="0.7"/>
+            <polygon points="14,0 5,2.5 2,0 5,-2.5" fill="#F5D97A" opacity="0.7"/>
+            <polygon points="-10,-10 -4,-5 -2,-2 -5,-4" fill="#F5D97A" opacity="0.45"/>
+            <polygon points="10,-10 4,-5 2,-2 5,-4" fill="#F5D97A" opacity="0.45"/>
+            <polygon points="10,10 4,5 2,2 5,4" fill="#F5D97A" opacity="0.45"/>
+            <polygon points="-10,10 -4,5 -2,2 -5,4" fill="#F5D97A" opacity="0.45"/>
+            <circle cx="0" cy="0" r="2" fill="#F5D97A" opacity="0.85"/>
+            <circle cx="0" cy="0" r="6" stroke="#F5D97A" stroke-width="0.6" fill="none" opacity="0.35"/>
+            <circle cx="0" cy="0" r="11" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.25"/>
+            <circle cx="0" cy="0" r="16" stroke="#C9A84C" stroke-width="0.35" fill="none" opacity="0.15"/>
+          </g></g>
+          <path d="M20 30 L44 18 L68 30" stroke="#F5D97A" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
+          <path d="M20 58 L44 70 L68 58" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.4"/>
+          <path d="M20 30 L20 58" stroke="#C9A84C" stroke-width="0.9" opacity="0.32"/>
+          <path d="M68 30 L68 58" stroke="#C9A84C" stroke-width="0.9" opacity="0.24"/>
+          <circle cx="12" cy="26" r="1.6" fill="#F5D97A" opacity="0.7"/>
+          <circle cx="76" cy="26" r="1.6" fill="#F5D97A" opacity="0.7"/>
+          <path d="M41 12 L44 9 L47 12 L44 15 Z" fill="#F5D97A" opacity="0.7"/>
+          <circle cx="44" cy="8" r="1.5" fill="#F5D97A" opacity="0.9"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <span class="wm-gold">Azlan Bin Ali</span>
+          <span class="sub-gold">Engineer · AI · Agrotech</span>
+        </div>
+        <p style="font-size:10px;color:#6b5a20;text-align:center;">Primary — Black &amp; Gold</p>
+      </div>
+
+      <div class="logo-tile tile-secondary">
+        <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+          <defs><clipPath id="lp2"><polygon points="44,8 76,26 44,44 12,26"/></clipPath></defs>
+          <polygon points="44,8 76,26 44,44 12,26" fill="#3D2F8A" fill-opacity="0.12" stroke="#7F77DD" stroke-width="1.3"/>
+          <polygon points="12,26 44,44 44,80 12,62" fill="#3D2F8A" fill-opacity="0.07" stroke="#7F77DD" stroke-width="1.3"/>
+          <polygon points="76,26 44,44 44,80 76,62" fill="#3D2F8A" fill-opacity="0.03" stroke="#7F77DD" stroke-width="1.3"/>
+          <g clip-path="url(#lp2)"><g transform="translate(44,26)">
+            <line x1="0" y1="-18" x2="0" y2="18" stroke="white" stroke-width="0.5" opacity="0.3"/>
+            <line x1="-18" y1="0" x2="18" y2="0" stroke="white" stroke-width="0.5" opacity="0.3"/>
+            <line x1="-13" y1="-13" x2="13" y2="13" stroke="white" stroke-width="0.4" opacity="0.22"/>
+            <line x1="13" y1="-13" x2="-13" y2="13" stroke="white" stroke-width="0.4" opacity="0.22"/>
+            <polygon points="0,-14 2.5,-5 0,-2 -2.5,-5" fill="white" opacity="0.55"/>
+            <polygon points="0,14 2.5,5 0,2 -2.5,5" fill="white" opacity="0.55"/>
+            <polygon points="-14,0 -5,2.5 -2,0 -5,-2.5" fill="white" opacity="0.55"/>
+            <polygon points="14,0 5,2.5 2,0 5,-2.5" fill="white" opacity="0.55"/>
+            <polygon points="-10,-10 -4,-5 -2,-2 -5,-4" fill="white" opacity="0.35"/>
+            <polygon points="10,-10 4,-5 2,-2 5,-4" fill="white" opacity="0.35"/>
+            <polygon points="10,10 4,5 2,2 5,4" fill="white" opacity="0.35"/>
+            <polygon points="-10,10 -4,5 -2,2 -5,4" fill="white" opacity="0.35"/>
+            <circle cx="0" cy="0" r="2" fill="white" opacity="0.8"/>
+            <circle cx="0" cy="0" r="6" stroke="white" stroke-width="0.6" fill="none" opacity="0.3"/>
+            <circle cx="0" cy="0" r="11" stroke="white" stroke-width="0.5" fill="none" opacity="0.2"/>
+            <circle cx="0" cy="0" r="16" stroke="white" stroke-width="0.35" fill="none" opacity="0.13"/>
+          </g></g>
+          <path d="M20 30 L44 18 L68 30" stroke="white" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+          <path d="M20 58 L44 70 L68 58" stroke="#7F77DD" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
+          <path d="M20 30 L20 58" stroke="#7F77DD" stroke-width="0.9" opacity="0.28"/>
+          <path d="M68 30 L68 58" stroke="#7F77DD" stroke-width="0.9" opacity="0.2"/>
+          <circle cx="12" cy="26" r="1.6" fill="white" opacity="0.65"/>
+          <circle cx="76" cy="26" r="1.6" fill="white" opacity="0.65"/>
+          <path d="M41 12 L44 9 L47 12 L44 15 Z" fill="white" opacity="0.55"/>
+          <circle cx="44" cy="8" r="1.5" fill="white" opacity="0.8"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <span class="wm-light">Azlan Bin Ali</span>
+          <span class="sub-light">Engineer · AI · Agrotech</span>
+        </div>
+        <p style="font-size:10px;color:#7F77DD88;text-align:center;">Secondary — Obsidian Purple</p>
+      </div>
+
+      <div class="logo-tile tile-light">
+        <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+          <defs><clipPath id="lp3"><polygon points="44,8 76,26 44,44 12,26"/></clipPath></defs>
+          <polygon points="44,8 76,26 44,44 12,26" fill="#3D2F8A" fill-opacity="0.1" stroke="#3D2F8A" stroke-width="1.3"/>
+          <polygon points="12,26 44,44 44,80 12,62" fill="#3D2F8A" fill-opacity="0.06" stroke="#7F77DD" stroke-width="1.3"/>
+          <polygon points="76,26 44,44 44,80 76,62" fill="#3D2F8A" fill-opacity="0.03" stroke="#7F77DD" stroke-width="1.3"/>
+          <g clip-path="url(#lp3)"><g transform="translate(44,26)">
+            <line x1="0" y1="-18" x2="0" y2="18" stroke="#3D2F8A" stroke-width="0.5" opacity="0.35"/>
+            <line x1="-18" y1="0" x2="18" y2="0" stroke="#3D2F8A" stroke-width="0.5" opacity="0.35"/>
+            <polygon points="0,-14 2.5,-5 0,-2 -2.5,-5" fill="#3D2F8A" opacity="0.6"/>
+            <polygon points="0,14 2.5,5 0,2 -2.5,5" fill="#3D2F8A" opacity="0.6"/>
+            <polygon points="-14,0 -5,2.5 -2,0 -5,-2.5" fill="#3D2F8A" opacity="0.6"/>
+            <polygon points="14,0 5,2.5 2,0 5,-2.5" fill="#3D2F8A" opacity="0.6"/>
+            <polygon points="-10,-10 -4,-5 -2,-2 -5,-4" fill="#3D2F8A" opacity="0.38"/>
+            <polygon points="10,-10 4,-5 2,-2 5,-4" fill="#3D2F8A" opacity="0.38"/>
+            <polygon points="10,10 4,5 2,2 5,4" fill="#3D2F8A" opacity="0.38"/>
+            <polygon points="-10,10 -4,5 -2,2 -5,4" fill="#3D2F8A" opacity="0.38"/>
+            <circle cx="0" cy="0" r="2" fill="#3D2F8A" opacity="0.8"/>
+            <circle cx="0" cy="0" r="6" stroke="#3D2F8A" stroke-width="0.6" fill="none" opacity="0.3"/>
+            <circle cx="0" cy="0" r="11" stroke="#7F77DD" stroke-width="0.5" fill="none" opacity="0.22"/>
+          </g></g>
+          <path d="M20 30 L44 18 L68 30" stroke="#3D2F8A" stroke-width="1.1" stroke-linecap="round" opacity="0.6"/>
+          <path d="M20 58 L44 70 L68 58" stroke="#7F77DD" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
+          <path d="M20 30 L20 58" stroke="#7F77DD" stroke-width="0.9" opacity="0.28"/>
+          <path d="M68 30 L68 58" stroke="#7F77DD" stroke-width="0.9" opacity="0.2"/>
+          <circle cx="12" cy="26" r="1.6" fill="#3D2F8A" opacity="0.7"/>
+          <circle cx="76" cy="26" r="1.6" fill="#3D2F8A" opacity="0.7"/>
+          <path d="M41 12 L44 9 L47 12 L44 15 Z" fill="#3D2F8A" opacity="0.6"/>
+          <circle cx="44" cy="8" r="1.5" fill="#3D2F8A" opacity="0.85"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <span class="wm-dark">Azlan Bin Ali</span>
+          <span class="sub-dark">Engineer · AI · Agrotech</span>
+        </div>
+        <p style="font-size:10px;color:#7F77DD88;text-align:center;">On light background</p>
+      </div>
+
+      <div class="logo-tile tile-white">
+        <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+          <defs><clipPath id="lp4"><polygon points="44,8 76,26 44,44 12,26"/></clipPath></defs>
+          <polygon points="44,8 76,26 44,44 12,26" fill="#3D2F8A" fill-opacity="0.07" stroke="#3D2F8A" stroke-width="1.3"/>
+          <polygon points="12,26 44,44 44,80 12,62" fill="#3D2F8A" fill-opacity="0.04" stroke="#7F77DD" stroke-width="1.3"/>
+          <polygon points="76,26 44,44 44,80 76,62" fill="#3D2F8A" fill-opacity="0.02" stroke="#7F77DD" stroke-width="1.3"/>
+          <g clip-path="url(#lp4)"><g transform="translate(44,26)">
+            <line x1="0" y1="-18" x2="0" y2="18" stroke="#3D2F8A" stroke-width="0.5" opacity="0.3"/>
+            <line x1="-18" y1="0" x2="18" y2="0" stroke="#3D2F8A" stroke-width="0.5" opacity="0.3"/>
+            <polygon points="0,-14 2.5,-5 0,-2 -2.5,-5" fill="#3D2F8A" opacity="0.5"/>
+            <polygon points="0,14 2.5,5 0,2 -2.5,5" fill="#3D2F8A" opacity="0.5"/>
+            <polygon points="-14,0 -5,2.5 -2,0 -5,-2.5" fill="#3D2F8A" opacity="0.5"/>
+            <polygon points="14,0 5,2.5 2,0 5,-2.5" fill="#3D2F8A" opacity="0.5"/>
+            <polygon points="-10,-10 -4,-5 -2,-2 -5,-4" fill="#3D2F8A" opacity="0.3"/>
+            <polygon points="10,-10 4,-5 2,-2 5,-4" fill="#3D2F8A" opacity="0.3"/>
+            <polygon points="10,10 4,5 2,2 5,4" fill="#3D2F8A" opacity="0.3"/>
+            <polygon points="-10,10 -4,5 -2,2 -5,4" fill="#3D2F8A" opacity="0.3"/>
+            <circle cx="0" cy="0" r="2" fill="#3D2F8A" opacity="0.75"/>
+            <circle cx="0" cy="0" r="6" stroke="#3D2F8A" stroke-width="0.6" fill="none" opacity="0.25"/>
+          </g></g>
+          <path d="M20 30 L44 18 L68 30" stroke="#3D2F8A" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+          <path d="M20 58 L44 70 L68 58" stroke="#7F77DD" stroke-width="0.9" stroke-linecap="round" opacity="0.3"/>
+          <path d="M20 30 L20 58" stroke="#7F77DD" stroke-width="0.9" opacity="0.25"/>
+          <path d="M68 30 L68 58" stroke="#7F77DD" stroke-width="0.9" opacity="0.18"/>
+          <circle cx="12" cy="26" r="1.6" fill="#3D2F8A" opacity="0.65"/>
+          <circle cx="76" cy="26" r="1.6" fill="#3D2F8A" opacity="0.65"/>
+          <path d="M41 12 L44 9 L47 12 L44 15 Z" fill="#3D2F8A" opacity="0.55"/>
+          <circle cx="44" cy="8" r="1.5" fill="#3D2F8A" opacity="0.8"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <span class="wm-dark">Azlan Bin Ali</span>
+          <span class="sub-dark" style="color:#7F77DD;">Engineer · AI · Agrotech</span>
+        </div>
+        <p style="font-size:10px;color:#7F77DD88;text-align:center;">On white background</p>
+      </div>
+    </div>
+
+    <div class="rule-grid" style="margin-top:1.5rem;">
+      <div class="rule-card">
+        <p class="rule-title">Symbol meaning</p>
+        <p class="rule-body">The Kaabah cube — perfect, absolute, symmetrical. The mandala on its roof is the umbrella canopy of Masjid Nabawi — radial, geometric, precise. Heritage and mathematics in one mark.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Logo rules</p>
+        <p class="rule-body">Never stretch or rotate the mark. Always maintain clear space equal to the height of the letter "A" around all sides. Never place on a busy background without sufficient contrast.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- COLOUR -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">03 — Colour</p>
+    <h2 class="section-title">Palette</h2>
+
+    <div class="palette-section">
+      <p class="palette-label">Primary — Black &amp; Gold</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="swatch-block" style="background:#F5D97A;"></div><p class="swatch-name">Bright gold</p><p class="swatch-hex">#F5D97A</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#C9A84C;"></div><p class="swatch-name">Deep gold</p><p class="swatch-hex">#C9A84C</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#6b5a20;"></div><p class="swatch-name">Antique</p><p class="swatch-hex">#6b5a20</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#1a1500; border:1px solid #C9A84C33;"></div><p class="swatch-name">Near black</p><p class="swatch-hex">#1a1500</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#0f0c00; border:1px solid #C9A84C33;"></div><p class="swatch-name">True black</p><p class="swatch-hex">#0f0c00</p></div>
+      </div>
+
+      <p class="palette-label">Secondary — Obsidian Purple</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="swatch-block" style="background:#EEEDFE;"></div><p class="swatch-name">Mist</p><p class="swatch-hex">#EEEDFE</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#AFA9EC;"></div><p class="swatch-name">Lavender</p><p class="swatch-hex">#AFA9EC</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#7F77DD;"></div><p class="swatch-name">Iris</p><p class="swatch-hex">#7F77DD</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#3D2F8A;"></div><p class="swatch-name">Obsidian</p><p class="swatch-hex">#3D2F8A</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#1A1630; border:1px solid #7F77DD33;"></div><p class="swatch-name">Deep night</p><p class="swatch-hex">#1A1630</p></div>
+      </div>
+
+      <p class="palette-label">Accent — Natural Earth</p>
+      <div class="swatch-row">
+        <div class="swatch"><div class="swatch-block" style="background:#EAF3DE;"></div><p class="swatch-name">Fern mist</p><p class="swatch-hex">#EAF3DE</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#97C459;"></div><p class="swatch-name">Canopy</p><p class="swatch-hex">#97C459</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#3B6D11;"></div><p class="swatch-name">Forest</p><p class="swatch-hex">#3B6D11</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#ED93B1;"></div><p class="swatch-name">Bloom</p><p class="swatch-hex">#ED93B1</p></div>
+        <div class="swatch"><div class="swatch-block" style="background:#1D9E75;"></div><p class="swatch-name">Jade</p><p class="swatch-hex">#1D9E75</p></div>
+      </div>
+    </div>
+
+    <div class="rule-grid">
+      <div class="rule-card">
+        <p class="rule-title">Gold for heritage contexts</p>
+        <p class="rule-body">Use black and gold when the context is formal, prestigious, or high-stakes. Presentations, personal website hero, print materials.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Purple for tech contexts</p>
+        <p class="rule-body">Use obsidian purple for engineering, AI, and digital product work. Dashboards, GitHub profile, technical writing.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Green for agrotech</p>
+        <p class="rule-body">Forest greens appear only in agricultural and environmental contexts. Never mixed with gold on the same surface.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">One accent at a time</p>
+        <p class="rule-body">Never combine gold and purple on the same screen. Pick one per context and stay consistent throughout that surface.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TYPOGRAPHY -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">04 — Typography</p>
+    <h2 class="section-title">Type scale</h2>
+    <p class="section-body" style="margin-bottom:2rem;">Primary font: <strong style="color:#F5D97A;font-weight:500;">Geist Sans</strong> or <strong style="color:#F5D97A;font-weight:500;">Inter</strong> for all digital surfaces. Both are free and available on Google Fonts. Use a serif (Lora) only for long-form editorial content.</p>
+
+    <div class="type-block">
+      <p style="font-size:40px;font-weight:500;letter-spacing:-1px;color:#F5D97A;">Display</p>
+      <p class="type-spec">40px · weight 500 · tracking -1px · hero titles only</p>
+    </div>
+    <div class="type-block">
+      <p style="font-size:28px;font-weight:500;letter-spacing:-0.5px;color:#F5D97A;">Section heading</p>
+      <p class="type-spec">28px · weight 500 · tracking -0.5px · page sections</p>
+    </div>
+    <div class="type-block">
+      <p style="font-size:18px;font-weight:500;color:#E8D49A;">Subheading</p>
+      <p class="type-spec">18px · weight 500 · cards, labels, UI</p>
+    </div>
+    <div class="type-block">
+      <p style="font-size:15px;font-weight:400;line-height:1.7;color:#C9A84C;">Body text — where the real work lives. Clear, direct, and never padded. Good writing is precise: one idea per sentence, no filler.</p>
+      <p class="type-spec">15px · weight 400 · line-height 1.7 · all body copy</p>
+    </div>
+    <div class="type-block" style="border:none;">
+      <p style="font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:#6b5a20;">Caption / Label</p>
+      <p class="type-spec">11px · weight 500 · tracking 0.15em · uppercase · metadata, section labels</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SPACING -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">05 — Spacing</p>
+    <h2 class="section-title">Scale</h2>
+    <p class="section-body">Everything is a multiple of 4px. Default border-radius: 8px for components, 12px for cards, 20px for pills and tags.</p>
+    <div class="spacing-row">
+      <div class="sp-item"><div class="sp-block" style="width:4px;height:4px;"></div><span class="sp-val">4</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:8px;height:8px;"></div><span class="sp-val">8</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:12px;height:12px;"></div><span class="sp-val">12</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:16px;height:16px;"></div><span class="sp-val">16</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:24px;height:24px;"></div><span class="sp-val">24</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:32px;height:32px;"></div><span class="sp-val">32</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:48px;height:48px;"></div><span class="sp-val">48</span></div>
+      <div class="sp-item"><div class="sp-block" style="width:64px;height:64px;"></div><span class="sp-val">64</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- COMPONENTS -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">06 — Components</p>
+    <h2 class="section-title">UI elements</h2>
+
+    <p style="font-size:12px;color:#6b5a20;margin:1.5rem 0 0.5rem;letter-spacing:0.08em;text-transform:uppercase;">Buttons — gold mode</p>
+    <div class="comp-row">
+      <button class="btn-primary">Primary action</button>
+      <button class="btn-secondary">Secondary</button>
+      <button class="btn-ghost">Ghost</button>
+    </div>
+
+    <p style="font-size:12px;color:#6b5a20;margin:1.5rem 0 0.5rem;letter-spacing:0.08em;text-transform:uppercase;">Tags &amp; badges</p>
+    <div class="comp-row">
+      <span class="tag">AI engineering</span>
+      <span class="tag-purple">Agrotech</span>
+      <span class="tag-green">Petroleum</span>
+      <span style="display:inline-flex;align-items:center;background:#FBEAF0;color:#72243E;font-size:12px;padding:4px 12px;border-radius:20px;">IoT</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- DESIGN RULES -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">07 — Design rules</p>
+    <h2 class="section-title">Principles</h2>
+    <div class="rule-grid">
+      <div class="rule-card">
+        <p class="rule-title">Clarity over decoration</p>
+        <p class="rule-body">No gradients, no heavy shadows. If an element carries no information, it shouldn't be there. Whitespace is the premium signal.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Complexity made simple</p>
+        <p class="rule-body">Every interface should look effortless. The hard work happens before the screen — not on it. This is the brand story in visual form.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Heritage as strength</p>
+        <p class="rule-body">The Islamic geometric references are not decoration. They are identity. Use them with intention, not as superficial ornament.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Gold anchors confidence</p>
+        <p class="rule-body">Gold (#C9A84C) is the primary brand colour. Use it for CTAs, key UI elements, and wherever you need to signal presence and authority.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Context switches colourway</p>
+        <p class="rule-body">Engineering and AI work uses obsidian purple. Formal and heritage contexts use black and gold. Agricultural work uses green. Never mix.</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-title">Sky is the limit</p>
+        <p class="rule-body">The mark is always reaching upward. Compositions should breathe — generous top space, never capped or crowded at the top of a frame.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CONTEXT USAGE -->
+  <div class="section" style="margin-top:4rem;">
+    <p class="section-label">08 — Usage by context</p>
+    <h2 class="section-title">Where and how</h2>
+    <div class="usage-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="usage-card"><p class="usage-ctx">LinkedIn / personal site</p><p class="usage-val">Black &amp; gold · Geist Sans · formal tone</p></div>
+      <div class="usage-card"><p class="usage-ctx">Presentations / slides</p><p class="usage-val">Black &amp; gold · display type · generous whitespace</p></div>
+      <div class="usage-card"><p class="usage-ctx">GitHub / technical docs</p><p class="usage-val">Obsidian purple · mono for code · clean layout</p></div>
+      <div class="usage-card"><p class="usage-ctx">Social media</p><p class="usage-val">Black &amp; gold primary · square or portrait format</p></div>
+      <div class="usage-card"><p class="usage-ctx">Dashboards / web apps</p><p class="usage-val">Obsidian purple · Inter · 4px spacing grid</p></div>
+      <div class="usage-card"><p class="usage-ctx">Agro / farm projects</p><p class="usage-val">Forest green accent · earthy tones · approachable</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Azlan Bin Ali · Design Standard · Version 1 · May 2026</p>
+  <p style="margin-top:8px;"><span>This document is a living reference. Update it whenever the brand evolves.</span></p>
+</div>
+
+</body>
+</html>
